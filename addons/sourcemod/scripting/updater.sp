@@ -19,13 +19,11 @@ public Plugin:myinfo =
 
 /* Globals */
 //#define DEBUG		// This will enable verbose logging. Useful for developers testing their updates.
-#define STEAMWORKS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "SteamWorks_WriteHTTPResponseBodyToFile") == FeatureStatus_Available)
+#define STEAMWORKS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "SteamWorks_WriteHTTPResponseBodyToFile") == FeatureStatus_Available)
 
-#define EXTENSION_ERROR		"This plugin requires SteamWorks extension to function."
-#define TEMP_FILE_EXT		"temp"		// All files are downloaded with this extension first.
-#define MAX_URL_LENGTH		256
-
-#define UPDATE_URL			"http://godtony.mooo.com/updater/updater.txt"
+#define EXTENSION_ERROR "This plugin requires SteamWorks extension to function."
+#define TEMP_FILE_EXT "temp"		// All files are downloaded with this extension first.
+#define MAX_URL_LENGTH 256
 
 enum UpdateStatus {
 	Status_Idle,		
@@ -88,14 +86,9 @@ public OnPluginStart()
 	
 	// Temp path for checking update files.
 	BuildPath(Path_SM, _sDataPath, sizeof(_sDataPath), "data/updater.txt");
-	
-#if !defined DEBUG
-	// Add this plugin to the autoupdater.
-	Updater_AddPlugin(GetMyHandle(), UPDATE_URL);
-#endif
 
-	// Check for updates every 24 hours.
-	_hUpdateTimer = CreateTimer(86400.0, Timer_CheckUpdates, _, TIMER_REPEAT);
+	// Check for updates every 3 hours.
+	_hUpdateTimer = CreateTimer(10800.0, Timer_CheckUpdates, _, TIMER_REPEAT);
 }
 
 public OnAllPluginsLoaded()
