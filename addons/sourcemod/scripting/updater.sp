@@ -5,20 +5,20 @@
 #include <SteamWorks>
 
 /* Plugin Info */
-#define PLUGIN_NAME 		"Updater"
-#define PLUGIN_VERSION 		"1.2.2"
+#define PLUGIN_NAME 		"Updater - SteamWorks only"
+#define PLUGIN_VERSION 		"1.3.0"
 
 public Plugin:myinfo =
 {
 	name = PLUGIN_NAME,
-	author = "GoD-Tony",
+	author = "Bara (Original author: GoD-Tony)",
 	description = "Automatically updates SourceMod plugins and files",
 	version = PLUGIN_VERSION,
-	url = "http://forums.alliedmods.net/showthread.php?t=169095"
+	url = ""
 };
 
 /* Globals */
-//#define DEBUG		// This will enable verbose logging. Useful for developers testing their updates.
+// #define DEBUG // This will enable verbose logging. Useful for developers testing their updates.
 #define STEAMWORKS_AVAILABLE() (GetFeatureStatus(FeatureType_Native, "SteamWorks_WriteHTTPResponseBodyToFile") == FeatureStatus_Available)
 
 #define EXTENSION_ERROR "This plugin requires SteamWorks extension to function."
@@ -118,17 +118,8 @@ public Action:Timer_CheckUpdates(Handle:timer)
 
 public Action:Command_Check(client, args)
 {
-	new Float:fNextUpdate = _fLastUpdate + 3600.0;
-	
-	if (fNextUpdate > GetTickedTime())
-	{
-		ReplyToCommand(client, "[Updater] Updates can only be checked once per hour. %.1f minutes remaining.", (fNextUpdate - GetTickedTime()) / 60.0);
-	}
-	else
-	{
-		ReplyToCommand(client, "[Updater] Checking for updates.");
-		TriggerTimer(_hUpdateTimer, true);
-	}
+	ReplyToCommand(client, "[Updater] Checking for updates.");
+	TriggerTimer(_hUpdateTimer, true);
 
 	return Plugin_Handled;
 }
